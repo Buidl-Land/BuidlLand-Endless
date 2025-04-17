@@ -1,0 +1,72 @@
+{
+  "name": "idea-pulse-evm",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "account": "yarn foundry:account",
+    "account:generate": "yarn foundry:generate",
+    "account:import": "yarn foundry:account-import",
+    "chain": "yarn foundry:chain",
+    "compile": "yarn foundry:compile",
+    "deploy": "yarn foundry:deploy",
+    "fork": "yarn foundry:fork",
+    "format": "yarn next:format && yarn foundry:format",
+    "foundry:account": "yarn workspace @se-2/foundry account",
+    "foundry:account-import": "yarn workspace @se-2/foundry account:import",
+    "foundry:chain": "yarn workspace @se-2/foundry chain",
+    "foundry:compile": "yarn workspace @se-2/foundry compile",
+    "foundry:deploy": "yarn workspace @se-2/foundry deploy",
+    "foundry:deploy-verify": "yarn workspace @se-2/foundry deploy:verify",
+    "foundry:flatten": "yarn workspace @se-2/foundry flatten",
+    "foundry:fork": "yarn workspace @se-2/foundry fork",
+    "foundry:format": "yarn workspace @se-2/foundry format",
+    "foundry:generate": "yarn workspace @se-2/foundry account:generate",
+    "foundry:lint": "yarn workspace @se-2/foundry lint",
+    "foundry:test": "yarn workspace @se-2/foundry test",
+    "foundry:verify": "yarn workspace @se-2/foundry verify",
+    "generate": "yarn foundry:generate",
+    "postinstall": "husky install",
+    "lint": "yarn next:lint && yarn foundry:lint",
+    "next:build": "yarn workspace @se-2/nextjs build",
+    "next:check-types": "yarn workspace @se-2/nextjs check-types",
+    "next:format": "yarn workspace @se-2/nextjs format",
+    "next:lint": "yarn workspace @se-2/nextjs lint",
+    "next:serve": "yarn workspace @se-2/nextjs serve",
+    "precommit": "lint-staged",
+    "start": "yarn workspace @se-2/nextjs dev",
+    "test": "cd packages/foundry && forge test -vvv",
+    "vercel": "yarn workspace @se-2/nextjs vercel",
+    "vercel:login": "yarn workspace @se-2/nextjs vercel:login",
+    "vercel:yolo": "yarn workspace @se-2/nextjs vercel:yolo",
+    "verify": "yarn foundry:verify",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.8",
+    "husky": "^8.0.3",
+    "lint-staged": "~13.2.2"
+  },
+  "packageManager": "yarn@3.2.3",
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "dependencies": {
+    "@endlesslab/endless-ts-sdk": "^1.0.5",
+    "@endlesslab/endless-web3-sdk": "^1.0.2",
+    "@mizuwallet-sdk/aptos-wallet-adapter": "^0.3.2",
+    "@mizuwallet-sdk/core": "^1.4.0",
+    "@radix-ui/react-slot": "^1.1.2",
+    "@telegram-apps/bridge": "^2.5.0",
+    "aptos": "^1.21.0",
+    "class-variance-authority": "^0.7.1",
+    "crypto-browserify": "^3.12.1",
+    "graphql": "^16.10.0",
+    "graphql-request": "^7.1.2",
+    "stream-browserify": "^3.0.0"
+  }
+}

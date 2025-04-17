@@ -1,0 +1,292 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "./theme.css";
+
+body {
+  min-height: 100vh;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4 {
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+h1 {
+  font-size: 2.5rem;
+  @apply tracking-tight;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+p {
+  margin: 1rem 0;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Card Styles */
+.card {
+  @apply rounded-lg border transition-all duration-200;
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+.card:hover {
+  @apply transform -translate-y-1;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Base Styles */
+.btn {
+  @apply font-semibold rounded-lg transition-all duration-200;
+  padding: 0.75rem 1.5rem;
+}
+
+.btn:hover {
+  @apply transform scale-105;
+}
+
+.btn:active {
+  @apply transform scale-95;
+}
+
+/* Decorative Elements */
+.decoration-dots {
+  background-image: radial-gradient(var(--color-neon-volt) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.1;
+}
+
+.decoration-grid {
+  background-image: linear-gradient(var(--border-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.05;
+}
+
+/* Network Status Indicators */
+.network-status {
+  @apply flex gap-2 items-center px-3 py-1 text-sm font-medium rounded-full;
+}
+
+.network-status.connected {
+  @apply text-green-800 bg-green-100;
+  [data-theme="dark"] & {
+    @apply text-green-400 bg-green-900 bg-opacity-20;
+  }
+}
+
+.network-status.disconnected {
+  @apply text-red-800 bg-red-100;
+  [data-theme="dark"] & {
+    @apply text-red-400 bg-red-900 bg-opacity-20;
+  }
+}
+
+/* Loading States */
+.loading-skeleton {
+  @apply rounded animate-pulse;
+  background: var(--border-color);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded;
+  background: var(--border-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Focus Styles */
+:focus-visible {
+  @apply ring-2 ring-offset-2 outline-none;
+  ring-color: var(--color-neon-volt);
+}
+
+/* Custom Selection */
+::selection {
+  background: #1a73e8;
+  color: white;
+}
+
+::-moz-selection {
+  background: #1a73e8;
+  color: white;
+}
+
+/* Motion-Safe Animations */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Enhanced animations */
+@layer utilities {
+  /* Enhanced fade-in animation */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out forwards;
+  }
+
+  /* Scale up animation with better timing */
+  .animate-scale-up {
+    animation: scaleUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Slide up animation with smoother motion */
+  .animate-slide-up {
+    animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Float animation for logos */
+  .animate-float {
+    animation: float 5s ease-in-out infinite;
+  }
+
+  /* Tech pulse animation for glowing elements */
+  .animate-tech-pulse {
+    animation: techPulse 3s infinite;
+  }
+
+  /* Animation for cards on hover - more subtle */
+  .card-hover {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow:
+      0 10px 25px -5px rgba(var(--color-primary-rgb), 0.1),
+      0 8px 10px -6px rgba(var(--color-primary-rgb), 0.1);
+  }
+
+  /* Enhanced shadow effects */
+  .shadow-glow {
+    box-shadow: 0 0 15px rgba(var(--color-primary-rgb), 0.3);
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes techPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0.2);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(var(--color-primary-rgb), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0);
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+  .tag {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
+  }
+
+  .btn-sm {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+}
+
+/* Define tag component for consistent styling */
+.tag {
+  @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+}
+
+/* Button with glowing outline effect */
+.btn-outline-glow {
+  @apply border border-primary/30 text-primary hover:bg-primary/10 hover:border-primary hover:shadow-[0_0_10px_rgba(var(--color-primary-rgb),0.3)];
+}
+
+/* Gradient text for primary elements */
+.gradient-text-primary {
+  @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary;
+}

@@ -1,0 +1,168 @@
+---
+description: Dev Rule
+globs: 
+alwaysApply: true
+---
+# Full-Stack Web3 Development Prompt
+
+## Technical Stack Requirements
+**Core Architecture**
+- [Diamond Standard] ERC-2535 implementation with facets
+- [Foundry] v0.2.0+ (aligned with package.json scripts)
+- [Next.js] 14.2.x App Router (strict version match)
+- [Wagmi] 2.12.x + [viem] 2.21.x (type-safe interactions)
+
+**Contract Development**
+1. Solidity 0.8.20 (OpenZeppelin v5.2 imports)
+2. Storage layout following Diamond Storage pattern
+3. Facet management using `LibDiamond` conventions
+4. Foundry FFI for off-chain computation proofs
+
+**Frontend Development**
+1. TypeScript 5.x with ABIType generation
+2. Zustand stores with React Query hydration
+3. daisyUI components + Tailwind important prefixes
+4. RainbowKit authentication with SIWE integration
+
+## Implementation Requirements
+### Smart Contracts
+```solidity
+// File: contracts/core/Diamond.sol
+// 1. Diamond storage structure using ERC2535
+// 2. Facet interfaces with explicit selector mapping
+// 3. Upgrade security: Timelock + multisig pattern
+// 4. Gas optimization: Fixed-size types in storage slots
+
+// Example facet structure:
+contract GreeterFacet {
+    struct Storage {
+        string greeting;
+        mapping(address => uint256) userCounters;
+    }
+    
+    function diamondStorage() internal pure returns (Storage storage ds) {
+        bytes32 position = keccak256("diamond.greeter.facet");
+        assembly { ds.slot := position }
+    }
+    
+    function updateGreeting(string calldata _newGreeting) external {
+        Storage storage ds = diamondStorage();
+        ds.greeting = _newGreeting;
+        // Event emission with Diamond-compatible logging
+    }
+}
+```
+
+### Frontend Integration
+```typescript
+// File: packages/nextjs/hooks/useDiamondContract.ts
+// 1. Type-safe contract interaction hooks
+// 2. Automatic ABI loading from artifacts
+// 3. Error boundary handling for wallet disconnects
+// 4. Gas estimation with fallback mechanisms
+
+const useGreeter = () => {
+  const { data: diamondContract } = useScaffoldContract({
+    contractName: "Diamond",
+  });
+
+  const updateGreeting = async (newGreeting: string) => {
+    // Step 1: Validate input client-side
+    if (!newGreeting.match(/^[\w\s-]+$/)) throw new Error("Invalid characters");
+    
+    // Step 2: Estimate gas using FFI simulation
+    const estimatedGas = await diamondContract?.estimateGas.updateGreeting(newGreeting);
+    
+    // Step 3: Execute with progress indicators
+    return await writeContract({
+      address: diamondContract.address,
+      abi: diamondContract.abi,
+      functionName: "updateGreeting",
+      args: [newGreeting],
+      gas: estimatedGas.mul(120).div(100), // 20% buffer
+    });
+  };
+  
+  return { updateGreeting };
+};
+```
+
+## Quality Assurance
+1. **Contract Tests**
+```solidity
+// File: test/Diamond.t.sol
+// 1. Fuzz testing for all public functions
+// 2. Upgrade scenario simulations
+// 3. Storage collision checks
+// 4. Gas snapshot comparisons
+
+function testFuzz_GreetingUpdate(string memory newGreeting) public {
+  vm.assume(bytes(newGreeting).length <= 100);
+  
+  DiamondContract.updateGreeting(newGreeting);
+  assertEq(DiamondContract.getGreeting(), newGreeting);
+  
+  // Gas report for optimization tracking
+  vm.snapshotGas();
+}
+```
+
+2. **Frontend Tests**
+```typescript
+// File: packages/nextjs/__tests__/Greeter.test.tsx
+// 1. Mocked wallet connection states
+// 2. Contract interaction simulations
+// 3. Responsive layout verification
+// 4. Error state handling tests
+
+test("should display updated greeting", async () => {
+  const { getByPlaceholderText, getByText } = render(<GreeterComponent />);
+  
+  // Mock contract response
+  mockUseScaffoldContract.mockReturnValue({
+    data: { getGreeting: () => "Hello Test" },
+  });
+  
+  await waitFor(() => {
+    expect(getByText("Hello Test")).toBeInTheDocument();
+  });
+});
+```
+
+## Development Workflow
+1. **Thinking Process Requirements**
+- Phase 1: Storage layout design → Validate against existing facets
+- Phase 2: Function selector conflicts check → Use `forge inspect` 
+- Phase 3: Upgrade path simulation → Test timelock delays
+- Phase 4: Frontend state synchronization → Query invalidation patterns
+
+2. **Code Generation Rules**
+- All Solidity functions must include NatSpec with `@dev` and `@notice`
+- React hooks must use `useCallback` for contract interactions
+- Storage variables must use Diamond-specific slots
+- Component props require TypeScript interfaces
+
+3. **Validation Checklist**
+✅ Cross-facet storage collisions verified  
+✅ Frontend ABIs match deployed artifact hashes  
+✅ Gas limits within network requirements  
+✅ Responsive breakpoints tested (xs-xl)  
+✅ Wallet connection states handled (disconnected/chain mismatch)
+
+## Version Constraints
+- Match exact package.json versions from:
+  ```json
+  "next": "~14.2.11",
+  "wagmi": "2.12.23",
+  "viem": "2.21.32",
+  "@openzeppelin/contracts": "^5.2.0"
+  ```
+- Use Foundry 0.2.x test patterns
+- Maintain Hardhat compatibility for plugin ecosystem
+
+## Security Requirements
+1. Signature replay protection (EIP-712)
+2. Facet initialization guards
+3. Storage isolation verification
+4. Frontend input sanitization
+5. Wallet transaction post-mortem analysis

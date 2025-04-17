@@ -1,0 +1,13 @@
+{
+  "name": "Idea Pulse",
+  "description": "A Web3 innovation incubation platform powered by AI and community-driven DAO governance. Build with AI, Grow with Community, Tokenize with DAO.",
+  "iconPath": "logo.svg",
+  "themeColor": "#0F1A2F",
+  "backgroundColor": "#0F1A2F",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "startUrl": "/",
+  "categories": ["web3", "blockchain", "defi", "dao"],
+  "keywords": ["AI", "DAO", "Web3", "Crowdfunding", "Innovation"]
+}
