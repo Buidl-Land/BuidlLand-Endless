@@ -4,7 +4,7 @@ version = "1.0.0"
 authors = []
 
 [addresses]
-buidlland = "0xbbe77a4bbb35fc09ccf594f9ee7963f5a34f067c6ae3105a8ad887c0fa865de8"
+buidlland = "_"
 [dev-addresses]
 
 [dependencies.EndlessFramework]
